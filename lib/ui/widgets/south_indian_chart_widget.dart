@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../domain/models/south_indian_chart.dart';
+import '../theme/app_design_tokens.dart';
 
 class SouthIndianChartWidget extends StatelessWidget {
   const SouthIndianChartWidget({super.key, required this.chart});
@@ -14,33 +15,57 @@ class SouthIndianChartWidget extends StatelessWidget {
     [9, 8, 7, 6],
   ];
 
+  static const Map<String, String> _planetSymbols = {
+    'Sun': '☉',
+    'Moon': '☾',
+    'Mars': '♂',
+    'Mercury': '☿',
+    'Jupiter': '♃',
+    'Venus': '♀',
+    'Saturn': '♄',
+    'Rahu': '☊',
+    'Ketu': '☋',
+  };
+
   @override
   Widget build(BuildContext context) {
-    return AspectRatio(
-      aspectRatio: 1,
-      child: Column(
-        children: _grid
-            .map(
-              (row) => Expanded(
-                child: Row(
-                  children: row
-                      .map(
-                        (house) => Expanded(
-                          child: _HouseCell(
-                            house: house,
-                            planets: house == null
-                                ? const []
-                                : chart.planetsForHouse(house),
+    return Container(
+      decoration: BoxDecoration(
+        color: AppColors.chartBackground,
+        borderRadius: BorderRadius.circular(AppRadius.lg),
+      ),
+      padding: const EdgeInsets.all(AppSpacing.xs),
+      child: AspectRatio(
+        aspectRatio: 1,
+        child: Column(
+          children: _grid
+              .map(
+                (row) => Expanded(
+                  child: Row(
+                    children: row
+                        .map(
+                          (house) => Expanded(
+                            child: _HouseCell(
+                              house: house,
+                              planets: house == null
+                                  ? const []
+                                  : chart.planetsForHouse(house),
+                            ),
                           ),
-                        ),
-                      )
-                      .toList(growable: false),
+                        )
+                        .toList(growable: false),
+                  ),
                 ),
-              ),
-            )
-            .toList(growable: false),
+              )
+              .toList(growable: false),
+        ),
       ),
     );
+  }
+
+  static String planetLabel(String planet) {
+    final symbol = _planetSymbols[planet] ?? '•';
+    return '$symbol $planet';
   }
 }
 
@@ -55,21 +80,23 @@ class _HouseCell extends StatelessWidget {
     final theme = Theme.of(context);
     return Container(
       margin: const EdgeInsets.all(1),
-      padding: const EdgeInsets.all(6),
+      padding: const EdgeInsets.all(AppSpacing.xxs),
       decoration: BoxDecoration(
-        border: Border.all(color: theme.colorScheme.outline),
+        color: AppColors.chartCellBackground,
+        border: Border.all(color: theme.colorScheme.outlineVariant),
+        borderRadius: BorderRadius.circular(AppRadius.sm),
       ),
       child: house == null
           ? const SizedBox.shrink()
           : Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('H$house', style: theme.textTheme.labelMedium),
-                const SizedBox(height: 2),
+                Text('H$house', style: theme.textTheme.labelSmall),
+                const SizedBox(height: AppSpacing.xxs),
                 Expanded(
                   child: Text(
-                    planets.join(', '),
-                    style: theme.textTheme.bodySmall,
+                    planets.map(SouthIndianChartWidget.planetLabel).join('\n'),
+                    style: AppTextStyles.compactBody,
                     overflow: TextOverflow.fade,
                     softWrap: true,
                   ),

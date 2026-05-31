@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
 
 import 'ui/screens/home_screen.dart';
+import 'ui/theme/app_design_tokens.dart';
 
 void main() {
-  runApp(const AstrologyNumerologyApp());
+  runApp(const AstroNumeroApp());
 }
 
-class AstrologyNumerologyApp extends StatelessWidget {
-  const AstrologyNumerologyApp({super.key});
+class AstroNumeroApp extends StatelessWidget {
+  const AstroNumeroApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Astrology & Numerology',
-      theme: ThemeData(useMaterial3: true),
+      title: 'Astro Numero',
+      debugShowCheckedModeBanner: false,
+      theme: buildAppTheme(),
       home: const HomeScreen(),
     );
   }
