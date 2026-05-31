@@ -74,7 +74,7 @@ ThemeData buildAppTheme() {
 
   return base.copyWith(
     visualDensity: VisualDensity.compact,
-    cardTheme: CardTheme(
+    cardTheme: CardThemeData(
       elevation: 0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(AppRadius.md),

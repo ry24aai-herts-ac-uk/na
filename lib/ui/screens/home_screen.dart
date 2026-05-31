@@ -625,7 +625,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 kind: record.kind,
               );
             },
-            separatorBuilder: (_, _) => const SizedBox(height: AppSpacing.xs),
+            separatorBuilder: (_, __) => const SizedBox(height: AppSpacing.xs),
             itemCount: records.length,
           ),
         ),
