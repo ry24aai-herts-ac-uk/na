@@ -4,7 +4,7 @@ import 'package:na/domain/models/south_indian_chart.dart';
 import 'package:na/ui/widgets/south_indian_chart_widget.dart';
 
 void main() {
-  testWidgets('renders house labels and planets', (tester) async {
+  testWidgets('renders house labels and planet symbols', (tester) async {
     final chart = SouthIndianChart(
       houses: const {
         1: ['Sun', 'Mercury'],
@@ -20,6 +20,7 @@ void main() {
 
     expect(find.text('H1'), findsOneWidget);
     expect(find.text('H12'), findsOneWidget);
-    expect(find.text('Sun, Mercury'), findsOneWidget);
+    expect(find.textContaining('☉ Sun'), findsOneWidget);
+    expect(find.textContaining('☿ Mercury'), findsOneWidget);
   });
 }
